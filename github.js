@@ -11,3 +11,13 @@
     await loadScript("https://raw.githubusercontent.com/5GameMaker/ghg-mpgarden/refs/heads/master/amx.js");
     await loadScript("https://raw.githubusercontent.com/5GameMaker/ghg-mpgarden/refs/heads/master/index.js");
 })();
+
+{
+    const src = Object.getOwnPropertyDescriptor(Image.prototype, "src");
+    const srcSet = src.set;
+    src.set = function(value) {
+        if (value.startsWith("data:")) return srcSet(value);
+        srcSet(`https://raw.githubusercontent.com/5GameMaker/ghg-mpgarden/refs/heads/master/${value}`);
+    };
+    Object.defineProperty(Image.prototype, "src", src);
+}
